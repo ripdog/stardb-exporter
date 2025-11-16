@@ -14,12 +14,13 @@ This method will not work on any kind of VPN
 - Note for WiFi users:
 
   - Windows: During Npcap installation, ensure `Support raw 802.11 traffic (and monitor mode) for wireless adapters` is ticked.
-  - Linux and Macos: Make sure you enable monitor mode for your wireless adapter.
+- Linux and Macos: Make sure you enable monitor mode for your wireless adapter.
 
 - Download the latest release:
   - [Windows](https://github.com/juliuskreutz/stardb-exporter/releases/latest/download/stardb-exporter.exe)
   - [Linux](https://github.com/juliuskreutz/stardb-exporter/releases/latest/download/stardb-exporter-linux)
   - [MacOs](https://github.com/juliuskreutz/stardb-exporter/releases/latest/download/stardb-exporter-macos)
+  - Linux AppImage: download `stardb-exporter-<version>-x86_64.AppImage` from the Assets list on the [latest release](https://github.com/juliuskreutz/stardb-exporter/releases/latest) page.
 - Launch the game to the point where.
   - HSR: The train is right before going into hyper speed
   - Genshin: Right before entering the door
@@ -33,6 +34,23 @@ For linux users, you need to set the `CAP_NET_RAW` capability
 
 ```sh
 sudo setcap CAP_NET_RAW=+ep target/release/stardb-exporter
+```
+
+### Building the Linux AppImage locally
+
+Requirements: `libpcap-dev`, `patchelf`, `libfuse2`, `curl`, `jq` and Rust.
+
+```sh
+sudo apt-get update
+sudo apt-get install -y libpcap-dev patchelf libfuse2 curl jq
+./scripts/build_appimage.sh
+```
+
+The resulting `stardb-exporter-<version>-x86_64.AppImage` will be in `target/`.
+If you need raw socket access without running as root, give the AppImage the capability (requires sudo):
+
+```sh
+sudo setcap CAP_NET_RAW=+ep ./target/stardb-exporter-*-x86_64.AppImage
 ```
 
 ## Special thanks
