@@ -144,15 +144,26 @@ jobs:
 
       - name: Rename
         run: |
-          cp windows/stardb-exporter.exe stardb-exporter.exe
-          zip stardb-exporter-v${{ steps.cargo-get.outputs.metadata }}-x86_64-pc-windows-msvc.zip stardb-exporter.exe
-          cp linux/stardb-exporter stardb-exporter
+          set -euo pipefail
+          VERSION="${{ steps.cargo-get.outputs.metadata }}"
+
+          WIN_EXE="$(find windows -name 'stardb-exporter.exe' -type f | head -n1)"
+          LINUX_BIN="$(find linux -name 'stardb-exporter' -type f | head -n1)"
+          MAC_BIN="$(find macos -name 'stardb-exporter' -type f | head -n1)"
+          APPIMAGE_FILE="$(find appimage -name '*.AppImage' -type f | head -n1)"
+
+          cp "$WIN_EXE" stardb-exporter.exe
+          zip "stardb-exporter-v${VERSION}-x86_64-pc-windows-msvc.zip" stardb-exporter.exe
+
+          cp "$LINUX_BIN" stardb-exporter
           cp stardb-exporter stardb-exporter-linux
-          zip stardb-exporter-v${{ steps.cargo-get.outputs.metadata }}-x86_64-unknown-linux-gnu.zip stardb-exporter
-          cp macos/stardb-exporter stardb-exporter
+          zip "stardb-exporter-v${VERSION}-x86_64-unknown-linux-gnu.zip" stardb-exporter
+
+          cp "$MAC_BIN" stardb-exporter
           cp stardb-exporter stardb-exporter-macos
-          zip stardb-exporter-v${{ steps.cargo-get.outputs.metadata }}-x86_64-apple-darwin.zip stardb-exporter
-          cp appimage/*.AppImage stardb-exporter-v${{ steps.cargo-get.outputs.metadata }}-x86_64.AppImage
+          zip "stardb-exporter-v${VERSION}-x86_64-apple-darwin.zip" stardb-exporter
+
+          cp "$APPIMAGE_FILE" "stardb-exporter-v${VERSION}-x86_64.AppImage"
 
       - name: Release
         uses: marvinpinto/action-automatic-releases@latest
