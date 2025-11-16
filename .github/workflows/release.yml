@@ -94,7 +94,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: appimage
-          path: target/*.AppImage
+          # Only upload the actual application AppImage, not helper tools like linuxdeploy/appimagetool.
+          path: target/stardb-exporter-*-x86_64.AppImage
 
   build-macos:
     name: Build Macos
