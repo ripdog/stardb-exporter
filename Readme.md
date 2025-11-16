@@ -18,15 +18,24 @@ This method will not work on any kind of VPN
 
 - Download the latest release:
   - [Windows](https://github.com/juliuskreutz/stardb-exporter/releases/latest/download/stardb-exporter.exe)
-  - [Linux](https://github.com/juliuskreutz/stardb-exporter/releases/latest/download/stardb-exporter-linux)
+  - [Linux AppImage (recommended)](https://github.com/juliuskreutz/stardb-exporter/releases/latest/download/stardb-exporter-*-x86_64.AppImage)
+  - [Linux binary](https://github.com/juliuskreutz/stardb-exporter/releases/latest/download/stardb-exporter-linux)
   - [MacOs](https://github.com/juliuskreutz/stardb-exporter/releases/latest/download/stardb-exporter-macos)
-  - Linux AppImage: download `stardb-exporter-<version>-x86_64.AppImage` from the Assets list on the [latest release](https://github.com/juliuskreutz/stardb-exporter/releases/latest) page.
 - Launch the game to the point where.
   - HSR: The train is right before going into hyper speed
   - Genshin: Right before entering the door
 - Execute the exporter (You might need to do this as admin/root) and wait for it to say `Device <i> ready~!`.
 - Go into hyperspeed/Enter the door and it should copy the export to your clipboard.
 - Paste it [here](https://stardb.gg/import).
+
+### Linux AppImage usage
+
+1) Download `stardb-exporter-<version>-x86_64.AppImage` from the latest release assets.  
+2) Make it executable: `chmod +x ./stardb-exporter-*-x86_64.AppImage`  
+3) (Recommended, so you don't need sudo) give it raw-socket capability:  
+   `sudo setcap CAP_NET_RAW=+ep ./stardb-exporter-*-x86_64.AppImage`  
+4) Run it: `./stardb-exporter-*-x86_64.AppImage`  
+If you skip step 3, you may need to run with `sudo` for capture access.
 
 ## Building from source
 
